@@ -65,7 +65,6 @@ def on() {
     def vpncType = "PPTP"
     def vpncAutoConn = "1"
     
-    //delayBetween([setVpn(vpncPppoeUsername, vpncPppoePasswd, vpncHeartbeatX, vpncProto, vpncType, vpncAutoConn), poll()], delayInterval())
     setVpn(vpncPppoeUsername, vpncPppoePasswd, vpncHeartbeatX, vpncProto, vpncType, vpncAutoConn)
 }
 
@@ -79,7 +78,7 @@ def off() {
     def vpncType = ""
     def vpncAutoConn = ""
     
-    delayBetween([setVpn(vpncPppoeUsername, vpncPppoePasswd, vpncHeartbeatX, vpncProto, vpncType, vpncAutoConn), poll()], delayInterval())
+    setVpn(vpncPppoeUsername, vpncPppoePasswd, vpncHeartbeatX, vpncProto, vpncType, vpncAutoConn)
 }
 
 def parse(String description) {
@@ -149,10 +148,6 @@ private String convertIPtoHex(ipAddress) {
 private String convertPortToHex(port) {
    String hexport = port.toString().format( '%04x', port.toInteger() )
    return hexport
-}
-
-private int delayInterval() {
- return 3000 // milli seconds delay between sending commands
 }
 
 private hubGet(path) {
@@ -235,6 +230,7 @@ private parseVpnStatus(str) {
         	break
 	}
 }
+
 private setVpn(vpncPppoeUsername, vpncPppoePasswd, vpncHeartbeatX, vpncProto, vpncType, vpncAutoConn) {
 	log.debug "Executing 'setVpn'"
     
